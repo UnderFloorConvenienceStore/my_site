@@ -1,0 +1,11 @@
+body {
+  font-family: Georgia, serif;
+  max-width: 650px;
+  margin: 40px auto;
+  color: #222;
+  background: #fafafa;
+}
+
+h1 {
+  color: #2a4d69;
+}
