@@ -34,7 +34,7 @@ body {
   max-width: 800px;
   margin: 0 auto;
   background: #fafafa;
-  border: 4px double #2a4d69;
+  border: 4px double #192029;
   padding: 10px;
 }
 
@@ -57,7 +57,7 @@ body {
 
 marquee {
   background: #ffe98a;
-  border: 1px dashed #2a4d69;
+  border: 1px dashed #192029;
   padding: 4px;
   margin: 10px 0;
   font-family: monospace;
@@ -70,7 +70,7 @@ marquee {
 
 #sidebar {
   width: 160px;
-  border: 1px solid #2a4d69;
+  border: 1px solid #192029;
   padding: 10px;
   background: #dfe9f1;
 }
@@ -86,8 +86,8 @@ marquee {
 }
 
 h2 {
-  color: #2a4d69;
-  border-bottom: 1px dotted #2a4d69;
+  color: #192029;
+  border-bottom: 1px dotted #192029;
 }
 
 h2 {
@@ -107,7 +107,7 @@ h1 {
 }
 
 #sidebar a[aria-current="page"] {
-  background: #2a4d69;
+  background: #192029;
   color: #fafafa;
   text-decoration: none;
   padding: 0 4px;
@@ -131,13 +131,13 @@ h1 {
 }
 
 a {
-  color: #2a4d69;
+  color: #192029;
 }
 
 #footer {
   text-align: center;
   font-size: 0.8em;
-  border-top: 1px solid #2a4d69;
+  border-top: 1px solid #192029;
   margin-top: 15px;
 }
 
