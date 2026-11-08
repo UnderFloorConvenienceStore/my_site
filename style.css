@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap');
-
 @font-face {
   font-family: 'LL Baguio';
   src: url('fonts/LL_BAGUIO.ttf') format('truetype');
@@ -14,15 +12,8 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Fira Sans';
-  src: url('fonts/FiraSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
 body {
-  font-family: 'Redaction 35', Tahoma, Verdana, sans-serif;
+  font-family: 'Redaction 35', Georgia, serif;
   font-weight: 400;
   color: #222;
   background: #e8e4d8;
@@ -43,16 +34,32 @@ body {
   background: #5981f0;
   color: #fafafa;
   padding: 15px;
+  overflow-wrap: anywhere;
 }
 
 #header h1 {
   color: #fafafa;
   margin: 0;
+  font-size: clamp(1rem, 6vw, 2rem);
+}
+
+h1 {
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
 }
 
 .tagline {
-  font-style: italic;
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  font-style: normal;
+  color: #060606;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   margin: 5px 0 0 0;
+  font-size: clamp(0.6rem, 3vw, 1rem);
 }
 
 marquee {
@@ -70,9 +77,12 @@ marquee {
 
 #sidebar {
   width: 160px;
-  border: 1px solid #192029;
+  border: 1px solid #2a4d69;
   padding: 10px;
   background: #dfe9f1;
+  align-self: flex-start;
+  position: sticky;
+  top: 20px;
 }
 
 #sidebar ul {
@@ -80,30 +90,10 @@ marquee {
   padding-left: 20px;
 }
 
-#main {
-  flex: 1;
-  padding: 0 10px;
-}
-
-h2 {
-  color: #192029;
-  border-bottom: 1px dotted #192029;
-}
-
-h2 {
-  font-family: 'Redaction 35', Georgia, serif;
-  font-synthesis: none;
-  font-weight: normal;
-}
-
-h1 {
-  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
-  font-synthesis: none;
-  font-weight: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #fafafa;
-  margin: 0;
+#sidebar ul ul {
+  list-style: circle;
+  padding-left: 18px;
+  margin-top: 4px;
 }
 
 #sidebar a[aria-current="page"] {
@@ -113,6 +103,23 @@ h1 {
   padding: 0 4px;
 }
 
+#main {
+  flex: 1;
+  padding: 0 10px;
+}
+
+h2 {
+  font-family: 'Redaction 35', Georgia, serif;
+  font-synthesis: none;
+  font-weight: normal;
+  color: #192029;
+  border-bottom: 1px dotted #192029;
+}
+
+a {
+  color: #192029;
+}
+
 #main img, #main iframe {
   max-width: 100%;
 }
@@ -120,18 +127,6 @@ h1 {
 .gallery img {
   display: block;
   margin: 0 0 15px 0;
-}
-
-.tagline {
-  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
-  font-synthesis: none;
-  color: #060606;	
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-a {
-  color: #192029;
 }
 
 #footer {
@@ -146,19 +141,27 @@ a {
     padding: 10px;
   }
 
+  h1, .tagline {
+    letter-spacing: 0.08em;
+  }
+
   #columns {
     flex-direction: column;
   }
 
   #sidebar {
     width: auto;
-    border-right: none;
-    border-bottom: 1px solid #111;
+    align-self: stretch;
+    position: static;
   }
 
   #sidebar ul {
     display: flex;
     flex-wrap: wrap;
     gap: 6px 16px;
+  }
+
+  #sidebar ul ul {
+    display: block;
   }
 }
