@@ -7,8 +7,23 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Redaction 35';
+  src: url('fonts/Redaction35-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('fonts/FiraSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
-  font-family: 'Josefin Sans', Tahoma, Verdana, sans-serif;
+  font-family: 'Redaction 35', Tahoma, Verdana, sans-serif;
+  font-weight: 400;
   color: #222;
   background: #e8e4d8;
   margin: 0;
@@ -75,15 +90,29 @@ h2 {
   border-bottom: 1px dotted #2a4d69;
 }
 
-h1, .tagline {
-  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+h2 {
+  font-family: 'Redaction 35', Georgia, serif;
   font-synthesis: none;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #111;
+  font-weight: normal;
 }
 
+h1 {
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #fafafa;
+  margin: 0;
+}
+
+.tagline {
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  color: #060606;	
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
 
 a {
   color: #2a4d69;
