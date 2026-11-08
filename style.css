@@ -165,3 +165,60 @@ a {
     display: block;
   }
 }
+
+#guestbook {
+  box-sizing: border-box;
+  max-width: 828px;
+  margin: 20px auto 0 auto;
+  background: #fafafa;
+  border: 4px double #192029;
+  padding: 10px 20px;
+}
+
+#guestbook form {
+  margin: 0 0 15px 0;
+}
+
+#guestbook label {
+  display: block;
+  margin-top: 10px;
+}
+
+#guestbook input[type="text"],
+#guestbook textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 6px;
+  border: 1px solid #2a4d69;
+  background: #fff;
+}
+
+#guestbook button {
+  margin-top: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 6px 14px;
+  border: 1px solid #2a4d69;
+  background: #dfe9f1;
+  color: #192029;
+  cursor: pointer;
+}
+
+#guestbook button:hover {
+  background: #fff;
+}
+
+.small {
+  font-size: 0.8em;
+}
+
+.entry {
+  border-bottom: 1px dotted #192029;
+  padding: 8px 0;
+}
+
+.entry p {
+  margin: 4px 0;
+}

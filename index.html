@@ -74,5 +74,37 @@ this website has been inspired by my new fascination with MTG.
       </div>
 
     </div>
+
+    <div id="guestbook">
+      <h2>GUESTBOOK</h2>
+      <p> Leave a note to say hello. It'll be emailed to me personally! This is definitely
+        a great idea that wont be misused...
+        <form action=""></form></p>
+
+      <form action="https://formspree.io/f/maeezgrj" method="POST">
+        <label for="name">YOUR NAME</label>
+        <input type="text" id="name" name="name" required maxlength="60">
+
+        <label for="message">YOUR MESSAGE</label>
+        <textarea id="message" name="message" rows="5" required maxlength="1000"></textarea>
+
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <button type="submit">SIGN HERE</button>
+      </form>
+
+      <p class="small">Messages are delivered through Formspree, a safe free-use form service.</p>
+
+      <h2>GUEST NOTES</h2>
+      <p>It's kind of quiet here at the moment.</p>
+
+      <!-- When you approve a message, replace the paragraph above with
+      entries like this, newest first:
+      <div class="entry">
+        <p class="entry-meta"><strong>Their name</strong> - 9 November 2026</p>
+        <p>Their message.</p>
+      </div>
+      -->
+    </div>
   </body>
 </html>
