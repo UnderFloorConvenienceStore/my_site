@@ -77,13 +77,15 @@ marquee {
 
 #sidebar {
   width: 160px;
-  border: 1px solid #2a4d69;
+  border: 1px solid #192029;
   padding: 10px;
   background: #dfe9f1;
   align-self: flex-start;
   position: sticky;
   top: 20px;
 }
+
+
 
 #sidebar ul {
   list-style: square;
@@ -191,7 +193,7 @@ a {
   font-family: inherit;
   font-size: 1rem;
   padding: 6px;
-  border: 1px solid #2a4d69;
+  border: 1px solid #192029;
   background: #fff;
 }
 
@@ -200,7 +202,7 @@ a {
   font-family: inherit;
   font-size: 1rem;
   padding: 6px 14px;
-  border: 1px solid #2a4d69;
+  border: 1px solid #192029;
   background: #dfe9f1;
   color: #192029;
   cursor: pointer;
