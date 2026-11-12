@@ -4,109 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>KAILLES WORKSHOP</title>
+    <script>try{var s=localStorage.getItem("dark-mode");if(s==="1")document.documentElement.classList.add("dark");var o=localStorage.getItem("screen-off");if(o==="1")document.documentElement.classList.add("off");}catch(e){}</script>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
   </head>
   <body>
-    <div id="page">
 
-      <div id="header">
-        <h1>KAILLES WORKSHOP</h1>
-        <p class="tagline">mathematician, photographer &amp; essayist</p>
-      </div>
+    <div id="monitor">
 
-      <marquee>~ welcome to my corner of the internet ~ under construction ~ please stand by for further instructions ~</marquee>
+      <div id="bezel">
+        <div id="page">
 
-      <div id="columns">
+          <div id="header">
+            <h1>KAILLES WORKSHOP</h1>
+            <p class="tagline">mathematician, photographer &amp; essayist</p>
+          </div>
 
-        <div id="sidebar">
-          <h2>CHOICES</h2>
-          <ul>
-            <li><a href="index.html" aria-current="page">HOME</a></li>
-            <li><a href="about.html">ABOUT</a></li>
-	    <li><a href="archives.html">ARCHIVES</a></li>
-            <li><a href="links.html">LINKS</a></li>
-          </ul>
+          <marquee>~ welcome to my corner of the internet ~ under construction ~ please stand by for further instructions ~</marquee>
+
+          <div id="main">
+            <h2>INTRODUCTION</h2>
+            <p>Hi! I'm Kaille. I like to do a lot of cool things!
+              This is my website, it has all my favourite things, like my photos, my essays
+              and links to all the places on the internet I take inspiration from and visit.
+            </p>
+
+            <p>
+              For now, with the lack of a better place to write my thoughts regarding this project,
+              I will write what I am committing myself to below.
+            </p>
+
+            <p>
+              I like the idea of having a kind of 2000's, Windows XP System inspired website. I take a lot of
+              inspiration from my childhood, experiences with the SEGA, the DS and GameBoy, and all those
+              old retro systems. The colours remind me of my old primary school, and in more recent years
+              this website has been inspired by my new fascination with MTG.
+            </p>
+
+            <p>
+              I have always had a fascination with games like RuneScape, and that "8-bit style" that
+              comes from an authentically old and preserved part of digital culture. I hope you find
+              my fascination with the aesthetic as enjoyable as I do!
+            </p>
+
+            <p>
+              I am looking forward to tinkering in here and seeing what comes of it. I can't wait
+              to show you how it goes!
+            </p>
+
+            <h2>NEWS</h2>
+            <ul>
+              <li>9th of November 2026: The 'Archives' and 'Guest Book' section have both
+                been added!</li>
+              <li>8th of November 2026: As of today 'Kailles Workshop' goes live!</li>
+            </ul>
+          
+          </div>
+
+          <div id="footer">
+            <p>&copy; 2026 Kaille Giitsidis</p>
+          </div>
+
         </div>
-
-        <div id="main">
-          <h2>INTRODUCTION</h2>
-          <p>Hi! I'm Kaille. I like to do a lot of cool things!
-		This is my website, it has all my favourite things, like my photos, my essays
-		and links to all the places on the internet I take inspiration from and visit.
-		</p>
-
-<p>
-
-  For now, with the lack of a better place to write my thoughts regarding this project,
-  I will write what I am committing myself to below.
-</p>
-
-    <p>
-I like the idea of having a kind of 2000's, Windows XP System inspired website. I take a lot of
-inspiration from my childhood, experiences with the SEGA, the DS and GameBoy, and all those
-old retro systems. The colours remind me of my old primary school, and in more recent years
-this website has been inspired by my new fascination with MTG.
-    </p>
-
-    <p>
-
-      I have always had a fascination with games like RuneScape, and that "8-bit style" that
-      comes from an authentically old and preserved part of digital culture. I hope you find
-      my fascination with the aesthetic as enjoyable as I do!
-    </p>
-
-    <p>
-
-      I am looking forward to tinkering in here and seeing what comes of it. I can't wait
-      to show you how it goes!
-    </p>
-
-          <h2>NEWS</h2>
-          <ul>
-            <li>9th of November 2026: The 'Archives' and 'Guest Book' section have both
-               been added!</li>
-            <li>8th of November 2026: As of today 'Kailles Workshop' goes live!</li>
-          </ul>
-        </div>
-
       </div>
 
-      <div id="footer">
-        <p>&copy; 2026 Kaille Giitsidis</p>
-      </div>
+      <nav id="panel" aria-label="Main">
+        <span class="light" aria-hidden="true"></span>
+        <button type="button" id="power" aria-label="Screen power" aria-pressed="true"></button>
+        <span class="knob" aria-hidden="true"></span>
+        <a href="index.html" aria-current="page">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="archives.html">ARCHIVES</a>
+        <a href="guestbook.html">GUESTBOOK</a>
+        <a href="links.html">LINKS</a>
+      </nav>
 
     </div>
 
-    <div id="guestbook">
-      <h2>GUESTBOOK</h2>
-      <p> Leave a note to say hello. It'll be emailed to me personally! This is definitely
-        a great idea that wont be misused...
-        <form action=""></form></p>
-
-      <form action="https://formspree.io/f/maeezgrj" method="POST">
-        <label for="name">YOUR NAME</label>
-        <input type="text" id="name" name="name" required maxlength="60">
-
-        <label for="message">YOUR MESSAGE</label>
-        <textarea id="message" name="message" rows="5" required maxlength="1000"></textarea>
-
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-
-        <button type="submit">SIGN HERE</button>
-      </form>
-
-      <p class="small">Messages are delivered through Formspree, a safe free-use form service.</p>
-
-      <h2>GUEST NOTES</h2>
-      <p>It's kind of quiet here at the moment.</p>
-
-      <!-- When you approve a message, replace the paragraph above with
-      entries like this, newest first:
-      <div class="entry">
-        <p class="entry-meta"><strong>Their name</strong> - 9 November 2026</p>
-        <p>Their message.</p>
-      </div>
-      -->
-    </div>
   </body>
 </html>

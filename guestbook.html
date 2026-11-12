@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guestbook - KAILLES WORKSHOP</title>
+    <script>try{var s=localStorage.getItem("dark-mode");if(s==="1")document.documentElement.classList.add("dark");var o=localStorage.getItem("screen-off");if(o==="1")document.documentElement.classList.add("off");}catch(e){}</script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+
+    <div id="monitor">
+
+      <div id="bezel">
+        <div id="page">
+
+          <div id="header">
+            <h1>KAILLES WORKSHOP</h1>
+            <p class="tagline">mathematician, photographer &amp; essayist</p>
+          </div>
+
+          <marquee>~ welcome to my corner of the internet ~ under construction ~ please stand by for further instructions ~</marquee>
+
+          <div id="main">
+            <h2>GUESTBOOK</h2>
+            <p>Leave a note to say hello. It'll be emailed to me personally! This is definitely
+              a great idea that wont be misused...</p>
+
+            <div class="guestbook">
+              <form action="https://formspree.io/f/maeezgrj" method="POST">
+                <label for="name">YOUR NAME</label>
+                <input type="text" id="name" name="name" required maxlength="60">
+
+                <label for="message">YOUR MESSAGE</label>
+                <textarea id="message" name="message" rows="5" required maxlength="1000"></textarea>
+
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+                <button type="submit">SIGN HERE</button>
+              </form>
+
+              <p class="small">Messages are delivered through Formspree, a safe free-use form service.</p>
+            </div>
+
+            <h2>GUEST NOTES</h2>
+            <p>It's kind of quiet here at the moment.</p>
+
+            <!-- When you approve a message, replace the paragraph above with
+            entries like this, newest first:
+            <div class="entry">
+              <p class="entry-meta"><strong>Their name</strong> - 9 November 2026</p>
+              <p>Their message.</p>
+            </div>
+            -->
+          </div>
+
+          <div id="footer">
+            <p>&copy; 2026 Kaille Giitsidis</p>
+          </div>
+
+        </div>
+      </div>
+
+      <nav id="panel" aria-label="Main">
+        <span class="light" aria-hidden="true"></span>
+        <button type="button" id="power" aria-label="Screen power" aria-pressed="true"></button>
+        <span class="knob" aria-hidden="true"></span>
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="archives.html">ARCHIVES</a>
+        <a href="guestbook.html" aria-current="page">GUESTBOOK</a>
+        <a href="links.html">LINKS</a>
+      </nav>
+
+    </div>
+
+  </body>
+</html>

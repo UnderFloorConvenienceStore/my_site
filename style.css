@@ -16,9 +16,10 @@ body {
   font-family: 'Redaction 35', Georgia, serif;
   font-weight: 400;
   color: #222;
-  background: #e8e4d8;
+  background: #ffffff;
   margin: 0;
   padding: 30px 20px;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 /* ---------- MONITOR CASING ---------- */
@@ -38,6 +39,7 @@ body {
     inset 0 -6px 10px rgba(0, 0, 0, 0.12),
     0 10px 0 #a8a290,
     0 16px 24px rgba(0, 0, 0, 0.3);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 /* the dark frame around the screen */
@@ -62,6 +64,7 @@ body {
   border-radius: 8px;
   padding: 10px;
   box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.25);
+  transition: background 0.25s ease;
 }
 
 /* ---------- SIDE PANEL (NAV BUTTONS) ---------- */
@@ -96,6 +99,9 @@ body {
   border: 1px solid #8d8776;
   box-shadow: 0 3px 0 #8d8776, 0 5px 6px rgba(0, 0, 0, 0.3);
   position: relative;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
 
 .knob::after {
@@ -108,6 +114,33 @@ body {
   margin-left: -1.5px;
   background: #a62a22;
   border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.knob:hover {
+  background: radial-gradient(circle at 35% 30%, #fbf9f2, #cfc9b8);
+}
+
+/* knob held/pressed: depresses and red line turns black */
+.knob:active,
+.knob.pressed {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #8d8776, inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.knob:active::after,
+.knob.pressed::after {
+  background: #000;
+}
+
+/* when dark mode is on, the knob's line stays black */
+.dark .knob::after {
+  background: #000;
+}
+
+.knob:focus-visible {
+  outline: 3px solid #5981f0;
+  outline-offset: 3px;
 }
 
 #panel a {
@@ -217,6 +250,48 @@ a {
   margin-top: 15px;
 }
 
+/* ---------- ARCHIVE TABS ---------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 0 14px 0;
+  padding: 0;
+  border-bottom: 1px solid #192029;
+  list-style: none;
+}
+
+.tabs li {
+  margin: 0;
+}
+
+.tabs a {
+  display: block;
+  padding: 6px 12px;
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #192029;
+  background: #e3ded0;
+  border: 1px solid #192029;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  margin-bottom: -1px;
+}
+
+.tabs a:hover {
+  background: #f1ede2;
+}
+
+.tabs a[aria-current="page"] {
+  background: #ffffff;
+  font-weight: bold;
+  padding-bottom: 7px;
+}
+
 /* ---------- GUESTBOOK PAGE ---------- */
 
 .guestbook form {
@@ -237,6 +312,7 @@ a {
   padding: 6px;
   border: 1px solid #192029;
   background: #fff;
+  color: inherit;
 }
 
 .guestbook button {
@@ -287,7 +363,6 @@ a {
   box-shadow: 0 3px 0 #8d8776, 0 5px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* the power symbol: a ring with a gap, and a line */
 #power::before {
   content: '';
   position: absolute;
@@ -325,7 +400,6 @@ a {
 
 /* ---------- SCREEN EFFECTS ---------- */
 
-/* faint scanlines and glare, sitting over the screen */
 #bezel {
   position: relative;
 }
@@ -343,9 +417,9 @@ a {
     linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 35%);
 }
 
-/* boot-up: a bright line that opens into the screen */
+/* boot-up: faster now (0.25s) */
 #page {
-  animation: boot 0.35s ease-out;
+  animation: boot 0.25s ease-out;
 }
 
 @keyframes boot {
@@ -380,6 +454,98 @@ a {
   }
 }
 
+/* ---------- DARK MODE ---------- */
+
+/* whole web page behind the monitor */
+.dark body {
+  background: #000000;
+  color: #d8d8d8;
+}
+
+/* monitor casing goes silvery grey */
+.dark #monitor {
+  background: linear-gradient(160deg, #b8bcc2 0%, #8d9197 100%);
+  border-color: #4a4d52;
+  box-shadow:
+  inset 0 2px 0 rgba(255, 255, 255, 0.55),
+  inset 0 -6px 10px rgba(0, 0, 0, 0.25),
+  0 10px 0 #5f6368,
+  0 16px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* the screen content goes black */
+.dark #page {
+  background: #000000;
+  color: #d8d8d8;
+}
+
+.dark #page h1,
+.dark #page h2 {
+  color: #e8e8e8;
+}
+
+.dark #page h2 {
+  border-bottom-color: #6a6a6a;
+}
+
+.dark #page a {
+  color: #9db8ff;
+}
+
+.dark #page #footer {
+  border-top-color: #6a6a6a;
+}
+
+.dark #header {
+  background: #1f2a4a;
+}
+
+.dark marquee {
+  background: #3a3410;
+  border-color: #e8e8e8;
+  color: #f0e6a0;
+}
+
+.dark .tabs {
+  border-bottom-color: #6a6a6a;
+}
+
+.dark .tabs a {
+  color: #d8d8d8;
+  background: #1a1a1a;
+  border-color: #6a6a6a;
+}
+
+.dark .tabs a:hover {
+  background: #2a2a2a;
+}
+
+.dark .tabs a[aria-current="page"] {
+  background: #000000;
+  color: #ffffff;
+}
+
+.dark .guestbook input[type="text"],
+.dark .guestbook textarea {
+  background: #111;
+  color: #e8e8e8;
+  border-color: #6a6a6a;
+}
+
+.dark .guestbook button {
+  background: #1f2a4a;
+  color: #e8e8e8;
+  border-color: #6a6a6a;
+}
+
+.dark .guestbook button:hover {
+  background: #2a3a5a;
+}
+
+.dark .entry {
+  border-bottom-color: #6a6a6a;
+}
+
 /* ---------- PHONES ---------- */
 
 @media (max-width: 700px) {
@@ -401,7 +567,6 @@ a {
     height: 70vh;
   }
 
-  /* buttons drop to a row under the screen */
   #panel {
     width: auto;
     flex-direction: row;
@@ -411,8 +576,16 @@ a {
     gap: 10px;
   }
 
-  .light, .knob {
+  .light {
     display: none;
+  }
+
+  .knob {
+    display: block;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    margin: 0;
   }
 
   #power {
@@ -424,20 +597,3 @@ a {
     padding: 10px 4px;
   }
 }
-
-
-   cat >> style.css <<'EOF'
-
-   /* centre the monitor in the window */
-   body {
-     min-height: 100vh;
-     box-sizing: border-box;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-   }
-
-   #monitor {
-     width: 100%;
-   }
-   EOF
