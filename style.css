@@ -18,16 +18,131 @@ body {
   color: #222;
   background: #e8e4d8;
   margin: 0;
-  padding: 20px;
+  padding: 30px 20px;
 }
 
-#page {
-  max-width: 800px;
+/* ---------- MONITOR CASING ---------- */
+
+#monitor {
+  display: flex;
+  gap: 18px;
+  box-sizing: border-box;
+  max-width: 940px;
   margin: 0 auto;
-  background: #fafafa;
-  border: 4px double #192029;
-  padding: 10px;
+  padding: 26px;
+  background: linear-gradient(160deg, #e6e1d2 0%, #cdc7b4 100%);
+  border: 1px solid #9c9684;
+  border-radius: 26px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.12),
+    0 10px 0 #a8a290,
+    0 16px 24px rgba(0, 0, 0, 0.3);
 }
+
+/* the dark frame around the screen */
+#bezel {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  background: #1b1f24;
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 12px #000,
+    0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* the screen itself: content scrolls in here */
+#page {
+  position: relative;
+  height: 600px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- SIDE PANEL (NAV BUTTONS) ---------- */
+
+#panel {
+  width: 112px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.light {
+  align-self: flex-end;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #6fe36f;
+  box-shadow: 0 0 6px #6fe36f, inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+.knob {
+  align-self: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f3efe3, #b9b3a0);
+  border: 1px solid #8d8776;
+  box-shadow: 0 3px 0 #8d8776, 0 5px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.knob::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 5px;
+  width: 3px;
+  height: 11px;
+  margin-left: -1.5px;
+  background: #a62a22;
+  border-radius: 2px;
+}
+
+#panel a {
+  display: block;
+  padding: 14px 4px;
+  text-align: center;
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: #192029;
+  text-decoration: none;
+  background: linear-gradient(#f1ede2, #cfc9b8);
+  border: 1px solid #8d8776;
+  border-radius: 7px;
+  box-shadow: 0 4px 0 #8d8776, 0 6px 6px rgba(0, 0, 0, 0.3);
+}
+
+#panel a:hover {
+  background: linear-gradient(#fbf9f2, #d9d3c2);
+}
+
+#panel a:active,
+#panel a.pressed,
+#panel a[aria-current="page"] {
+  transform: translateY(3px);
+  background: linear-gradient(#c6c0ae, #d6d0bf);
+  box-shadow: 0 1px 0 #8d8776, inset 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#panel a:focus-visible {
+  outline: 3px solid #5981f0;
+  outline-offset: 3px;
+}
+
+/* ---------- SCREEN CONTENT ---------- */
 
 #header {
   text-align: center;
@@ -70,43 +185,7 @@ marquee {
   font-family: monospace;
 }
 
-#columns {
-  display: flex;
-  gap: 15px;
-}
-
-#sidebar {
-  width: 160px;
-  border: 1px solid #192029;
-  padding: 10px;
-  background: #dfe9f1;
-  align-self: flex-start;
-  position: sticky;
-  top: 20px;
-}
-
-
-
-#sidebar ul {
-  list-style: square;
-  padding-left: 20px;
-}
-
-#sidebar ul ul {
-  list-style: circle;
-  padding-left: 18px;
-  margin-top: 4px;
-}
-
-#sidebar a[aria-current="page"] {
-  background: #192029;
-  color: #fafafa;
-  text-decoration: none;
-  padding: 0 4px;
-}
-
 #main {
-  flex: 1;
   padding: 0 10px;
 }
 
@@ -138,56 +217,19 @@ a {
   margin-top: 15px;
 }
 
-@media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
+/* ---------- GUESTBOOK PAGE ---------- */
 
-  h1, .tagline {
-    letter-spacing: 0.08em;
-  }
-
-  #columns {
-    flex-direction: column;
-  }
-
-  #sidebar {
-    width: auto;
-    align-self: stretch;
-    position: static;
-  }
-
-  #sidebar ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 16px;
-  }
-
-  #sidebar ul ul {
-    display: block;
-  }
-}
-
-#guestbook {
-  box-sizing: border-box;
-  max-width: 828px;
-  margin: 20px auto 0 auto;
-  background: #fafafa;
-  border: 4px double #192029;
-  padding: 10px 20px;
-}
-
-#guestbook form {
+.guestbook form {
   margin: 0 0 15px 0;
 }
 
-#guestbook label {
+.guestbook label {
   display: block;
   margin-top: 10px;
 }
 
-#guestbook input[type="text"],
-#guestbook textarea {
+.guestbook input[type="text"],
+.guestbook textarea {
   width: 100%;
   box-sizing: border-box;
   font-family: inherit;
@@ -197,7 +239,7 @@ a {
   background: #fff;
 }
 
-#guestbook button {
+.guestbook button {
   margin-top: 12px;
   font-family: inherit;
   font-size: 1rem;
@@ -208,7 +250,7 @@ a {
   cursor: pointer;
 }
 
-#guestbook button:hover {
+.guestbook button:hover {
   background: #fff;
 }
 
@@ -224,3 +266,178 @@ a {
 .entry p {
   margin: 4px 0;
 }
+
+.back {
+  margin: 0 0 10px 0;
+  font-size: 0.9em;
+}
+
+/* ---------- POWER BUTTON ---------- */
+
+#power {
+  position: relative;
+  align-self: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  cursor: pointer;
+  background: linear-gradient(#f1ede2, #cfc9b8);
+  border: 1px solid #8d8776;
+  border-radius: 8px;
+  box-shadow: 0 3px 0 #8d8776, 0 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* the power symbol: a ring with a gap, and a line */
+#power::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  box-sizing: border-box;
+  border: 2px solid #192029;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+
+#power::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 2px;
+  height: 9px;
+  margin-left: -1px;
+  background: #192029;
+}
+
+#power:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #8d8776, inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#power:focus-visible {
+  outline: 3px solid #5981f0;
+  outline-offset: 3px;
+}
+
+/* ---------- SCREEN EFFECTS ---------- */
+
+/* faint scanlines and glare, sitting over the screen */
+#bezel {
+  position: relative;
+}
+
+#bezel::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.07) 0, rgba(0, 0, 0, 0.07) 1px,
+      transparent 1px, transparent 3px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 35%);
+}
+
+/* boot-up: a bright line that opens into the screen */
+#page {
+  animation: boot 0.35s ease-out;
+}
+
+@keyframes boot {
+  0%   { transform: scale(0.6, 0.01); filter: brightness(3); }
+  45%  { transform: scale(1, 0.01);   filter: brightness(3); }
+  100% { transform: none;             filter: none; }
+}
+
+/* screen switched off with the power button */
+.off #page {
+  background: #0b0c0d;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.off #page > * {
+  visibility: hidden;
+}
+
+.off #bezel::after {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 35%);
+}
+
+.off .light {
+  background: #4a4f4a;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page {
+    animation: none;
+  }
+}
+
+/* ---------- PHONES ---------- */
+
+@media (max-width: 700px) {
+  body {
+    padding: 12px 8px;
+  }
+
+  h1, .tagline {
+    letter-spacing: 0.08em;
+  }
+
+  #monitor {
+    flex-direction: column;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  #page {
+    height: 70vh;
+  }
+
+  /* buttons drop to a row under the screen */
+  #panel {
+    width: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .light, .knob {
+    display: none;
+  }
+
+  #power {
+    flex: none;
+  }
+
+  #panel a {
+    flex: 1 1 70px;
+    padding: 10px 4px;
+  }
+}
+
+
+   cat >> style.css <<'EOF'
+
+   /* centre the monitor in the window */
+   body {
+     min-height: 100vh;
+     box-sizing: border-box;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+
+   #monitor {
+     width: 100%;
+   }
+   EOF
