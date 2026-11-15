@@ -597,3 +597,62 @@ a {
     padding: 10px 4px;
   }
 }
+
+/* ---- Archives binder (horizontal tabs) ---- */
+.binder {
+  display: grid;
+  grid-template-columns: repeat(4, auto) 1fr;  /* 4 tabs + filler */
+  margin: 1em 0;
+  text-align: left;
+}
+
+/* hide the radios but keep them keyboard-focusable */
+.binder input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.binder label {
+  grid-row: 1;
+  padding: 4px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  border: 2px solid currentColor;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  margin-right: 3px;
+  background: #f3d96b;              /* placeholder yellow */
+  color: #222;
+}
+
+.binder label:nth-of-type(1) { grid-column: 1; }
+.binder label:nth-of-type(2) { grid-column: 2; }
+.binder label:nth-of-type(3) { grid-column: 3; }
+.binder label:nth-of-type(4) { grid-column: 4; }
+
+.binder .sheet {
+  display: none;
+  grid-row: 2;
+  grid-column: 1 / -1;
+  padding: 12px 16px;
+  border: 2px solid currentColor;
+  background: #fffdf2;              /* placeholder paper colour */
+  color: #222;
+}
+
+/* active tab + its sheet */
+.binder input:checked + label {
+  background: #fffdf2;
+  position: relative;
+  top: 2px;                         /* tab "merges" into the sheet */
+}
+.binder input:checked + label + .sheet { display: block; }
+
+/* keyboard focus */
+.binder input:focus-visible + label { outline: 2px dashed currentColor; }
+
+/* dark mode */
+html.dark .binder label { background: #b8a24a; }
+html.dark .binder input:checked + label,
+html.dark .binder .sheet { background: #2b2b2b; color: #eee; }
