@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shelf - KAILLES WORKSHOP</title>
+    <script>try{var s=localStorage.getItem("dark-mode");if(s==="1")document.documentElement.classList.add("dark");var o=localStorage.getItem("screen-off");if(o==="1")document.documentElement.classList.add("off");}catch(e){}</script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+
+    <div id="monitor">
+
+      <div id="bezel">
+        <div id="page">
+
+          <div id="header">
+            <h1>KAILLES WORKSHOP</h1>
+            <p class="tagline">mathematician, photographer &amp; essayist</p>
+          </div>
+
+          <marquee>~ welcome to my corner of the internet ~ under construction ~ please stand by for further instructions ~</marquee>
+
+          <div id="main">
+            <h2>SHELF</h2>
+            <p class="back"><a href="archives.html">&larr; BACK TO ARCHIVES</a></p>
+            <p>Books I've read and films I've watched, with a few thoughts on each.
+              The longer reviews live in the Writing section.</p>
+
+            <div class="binder">
+
+              <input type="radio" name="shelf" id="t-books" checked>
+              <label for="t-books">BOOKS</label>
+              <div class="sheet">
+                <div class="shelf">
+
+                  <!-- Copy this block for each book. To use a real cover, delete
+                       the <div class="cover"> line and put in:
+                       <img class="cover" src="images/covers/FILENAME.jpg" alt="Cover of TITLE">
+                       Covers should be 2:3 (about 300px wide). -->
+                  <div class="item">
+                    <div class="cover">NO COVER YET</div>
+                    <p class="item-title">The Essays</p>
+                    <p class="item-by">Michel de Montaigne</p>
+                    <p class="item-meta">Finished: DATE<br>&#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                    <p class="item-note">Placeholder: your thoughts go here.</p>
+                  </div>
+
+                  <div class="item">
+                    <div class="cover">NO COVER YET</div>
+                    <p class="item-title">Thus Spoke Zarathustra</p>
+                    <p class="item-by">Friedrich Nietzsche</p>
+                    <p class="item-meta">Finished: DATE<br>&#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                    <p class="item-note">Placeholder: your thoughts go here.</p>
+                  </div>
+
+                  <div class="item">
+                    <div class="cover">NO COVER YET</div>
+                    <p class="item-title">Words of Radiance</p>
+                    <p class="item-by">Brandon Sanderson</p>
+                    <p class="item-meta">Finished: DATE<br>&#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                    <p class="item-note">Placeholder: your thoughts go here.</p>
+                  </div>
+
+                  <div class="item">
+                    <div class="cover">NO COVER YET</div>
+                    <p class="item-title">Either/Or</p>
+                    <p class="item-by">S&oslash;ren Kierkegaard</p>
+                    <p class="item-meta">Finished: DATE<br>&#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                    <p class="item-note">Placeholder: your thoughts go here.</p>
+                  </div>
+
+                </div>
+              </div>
+
+              <input type="radio" name="shelf" id="t-films">
+              <label for="t-films">FILMS</label>
+              <div class="sheet">
+                <div class="shelf">
+
+                  <div class="item">
+                    <div class="cover">NO POSTER YET</div>
+                    <p class="item-title">The Odyssey</p>
+                    <p class="item-by">Christopher Nolan</p>
+                    <p class="item-meta">Watched: DATE<br>&#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                    <p class="item-note">Placeholder: your thoughts go here.</p>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div id="footer">
+            <p>&copy; 2026 Kaille Giitsidis</p>
+          </div>
+
+        </div>
+      </div>
+
+      <nav id="panel" aria-label="Main">
+        <span class="light" aria-hidden="true"></span>
+        <button type="button" id="power" aria-label="Screen power" aria-pressed="true"></button>
+        <span class="knob" aria-hidden="true"></span>
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="archives.html" aria-current="page">ARCHIVES</a>
+        <a href="guestbook.html">GUESTBOOK</a>
+        <a href="links.html">LINKS</a>
+      </nav>
+
+    </div>
+
+  </body>
+</html>
