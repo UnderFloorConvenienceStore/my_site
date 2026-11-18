@@ -281,5 +281,47 @@
 
     </div>
 
+<div id="lightbox" class="lightbox">
+  <figure class="lightbox-frame">
+    <img id="lightbox-img" src="" alt="">
+    <figcaption id="lightbox-caption"></figcaption>
+    <button id="lightbox-close" class="lightbox-close" aria-label="Close">×</button>
+  </figure>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  const lbCaption = document.getElementById('lightbox-caption');
+
+   // For every photo in the gallery, listen for clicks
+  document.querySelectorAll('.gallery figure img').forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      const cap = img.closest('figure').querySelector('figcaption');
+      lbCaption.innerHTML = cap ? cap.innerHTML : '';
+      lightbox.classList.add('open');
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+  }
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+
+  // Clicking the dark area (but not the frame) also closes
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Escape key closes too
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
   </body>
 </html>

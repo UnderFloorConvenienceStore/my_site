@@ -889,3 +889,67 @@ html.dark .binder .sheet { background: #2b2b2b; color: #eee; }
 .dark #page a.card-view {
   color: #192029;
 }
+
+.lightbox {
+  position: fixed;
+  inset: 0;                      /* stretch to all four screen edges */
+  background: rgba(0, 0, 0, 0.8); /* the darkening */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;          /* invisible and unclickable while closed */
+  transition: opacity 0.25s ease;
+  z-index: 1000;
+}
+.lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-frame {
+  position: relative;            /* lets the X anchor to this frame */
+  margin: 0;
+  background: #fff;
+  padding: 16px 16px 56px;       /* thick bottom = polaroid look + room for X */
+  max-width: 92vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.85);
+  transition: transform 0.25s ease;
+}
+.lightbox.open .lightbox-frame {
+  transform: scale(1);           /* the "expand" animation */
+}
+
+.lightbox-frame img {
+  max-width: 100%;
+  max-height: calc(92vh - 90px); /* leaves room for padding + caption */
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.lightbox-frame figcaption {
+  font-family: monospace;
+  margin-top: 10px;
+}
+
+.lightbox-close {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;                  /* sits in the thick bottom border */
+  width: 28px;
+  height: 28px;
+  background: #c0392b;
+  color: #fff;
+  border: 2px outset #e57368;    /* bevel to match your buttons */
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+}
+.lightbox-close:active {
+  border-style: inset;
+}
