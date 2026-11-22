@@ -1,0 +1,167 @@
+@font-face {
+  font-family: 'LL Baguio';
+  src: url('fonts/LL_BAGUIO.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Redaction 35';
+  src: url('fonts/Redaction35-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Redaction 35', Georgia, serif;
+  font-weight: 400;
+  color: #222;
+  background: #e8e4d8;
+  margin: 0;
+  padding: 20px;
+}
+
+#page {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fafafa;
+  border: 4px double #192029;
+  padding: 10px;
+}
+
+#header {
+  text-align: center;
+  background: #5981f0;
+  color: #fafafa;
+  padding: 15px;
+  overflow-wrap: anywhere;
+}
+
+#header h1 {
+  color: #fafafa;
+  margin: 0;
+  font-size: clamp(1rem, 6vw, 2rem);
+}
+
+h1 {
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.tagline {
+  font-family: 'LL Baguio', Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  font-style: normal;
+  color: #060606;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 5px 0 0 0;
+  font-size: clamp(0.6rem, 3vw, 1rem);
+}
+
+marquee {
+  background: #ffe98a;
+  border: 1px dashed #192029;
+  padding: 4px;
+  margin: 10px 0;
+  font-family: monospace;
+}
+
+#columns {
+  display: flex;
+  gap: 15px;
+}
+
+#sidebar {
+  width: 160px;
+  border: 1px solid #2a4d69;
+  padding: 10px;
+  background: #dfe9f1;
+  align-self: flex-start;
+  position: sticky;
+  top: 20px;
+}
+
+#sidebar ul {
+  list-style: square;
+  padding-left: 20px;
+}
+
+#sidebar ul ul {
+  list-style: circle;
+  padding-left: 18px;
+  margin-top: 4px;
+}
+
+#sidebar a[aria-current="page"] {
+  background: #192029;
+  color: #fafafa;
+  text-decoration: none;
+  padding: 0 4px;
+}
+
+#main {
+  flex: 1;
+  padding: 0 10px;
+}
+
+h2 {
+  font-family: 'Redaction 35', Georgia, serif;
+  font-synthesis: none;
+  font-weight: normal;
+  color: #192029;
+  border-bottom: 1px dotted #192029;
+}
+
+a {
+  color: #192029;
+}
+
+#main img, #main iframe {
+  max-width: 100%;
+}
+
+.gallery img {
+  display: block;
+  margin: 0 0 15px 0;
+}
+
+#footer {
+  text-align: center;
+  font-size: 0.8em;
+  border-top: 1px solid #192029;
+  margin-top: 15px;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1, .tagline {
+    letter-spacing: 0.08em;
+  }
+
+  #columns {
+    flex-direction: column;
+  }
+
+  #sidebar {
+    width: auto;
+    align-self: stretch;
+    position: static;
+  }
+
+  #sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+
+  #sidebar ul ul {
+    display: block;
+  }
+}
