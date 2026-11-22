@@ -85,8 +85,8 @@ body {
   height: 10px;
   margin-right: 8px;
   border-radius: 50%;
-  background: #6fe36f;
-  box-shadow: 0 0 6px #6fe36f, inset 0 1px 1px rgba(255, 255, 255, 0.7);
+  background: #97efa0;
+  box-shadow: 0 0 6px #97efa0, inset 0 1px 1px rgba(255, 255, 255, 0.7);
 }
 
 .knob {
@@ -433,9 +433,11 @@ html.dark .gallery figure {
 
 #bezel {
   position: relative;
+  overflow:hidden;
 }
 
 #bezel::after {
+    z-index: 2;
   content: '';
   position: absolute;
   inset: 12px;
@@ -583,6 +585,8 @@ html.dark .gallery figure {
   body {
     padding: 12px 8px;
   }
+
+  .controls { margin: 0; }
 
   .gallery { columns: 1; }
 
@@ -953,3 +957,80 @@ html.dark .binder .sheet { background: #2b2b2b; color: #eee; }
 .lightbox-close:active {
   border-style: inset;
 }
+
+#bg {
+  position: fixed;
+  inset: 0;               /* stretch to all four edges */
+  width: 100%;
+  height: 100%;
+  z-index: -1;            /* behind everything */
+  image-rendering: pixelated;
+  opacity: 0.35;          /* keeps text readable */
+}
+
+#screenflow {
+  position: absolute;
+  inset: 12px;                      /* same as the bezel padding, so it sits exactly on the screen */
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  border-radius: 8px;               /* matches #page */
+  z-index: 1;                       /* above the black #page */
+  image-rendering: pixelated;
+  pointer-events: none;
+  opacity: 0;
+
+}
+.off #screenflow {
+  opacity: 1;
+  transition: opacity 1.5s ease 0.02s;   /* fade in after shutdown */
+}
+
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.controls .knob { margin: 0; }
+
+#fx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0 0 2px;                  /* the 2px nudges the symbol up so it looks centred */
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: #5981f0;                    /* blue = animation on */
+  background: radial-gradient(circle at 35% 30%, #f3efe3, #b9b3a0);
+  border: 1px solid #8d8776;
+  border-radius: 50%;                /* makes it a circle */
+  box-shadow: 0 3px 0 #8d8776, 0 5px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease, color 0.2s ease;
+}
+
+#fx:hover {
+  background: radial-gradient(circle at 35% 30%, #fbf9f2, #cfc9b8);
+}
+
+#fx:active,
+#fx.pressed {                        /* pressed in only while clicked */
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #8d8776, inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#fx[aria-pressed="false"] {
+  color: #000;                       /* black = animation off */
+}
+
+#fx:focus-visible {
+  outline: 3px solid #5981f0;
+  outline-offset: 3px;
+}
+
+.noflow #bg,
+.noflow #screenflow { display: none; }

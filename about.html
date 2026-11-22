@@ -7,12 +7,14 @@
     <script>try{var s=localStorage.getItem("dark-mode");if(s==="1")document.documentElement.classList.add("dark");var o=localStorage.getItem("screen-off");if(o==="1")document.documentElement.classList.add("off");}catch(e){}</script>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="bg.js" defer></script>
   </head>
   <body>
-
+<canvas id="bg"></canvas>
     <div id="monitor">
 
       <div id="bezel">
+        <canvas id="screenflow"></canvas>
         <div id="page">
 
           <div id="header">
@@ -24,6 +26,39 @@
 
           <div id="main">
           <h2>ABOUT</h2>
+
+
+<p> Hey! My Names Kaille. I'm so glad you came to visit my website, let me tell you
+  a little bit about myself and about my workshop.
+</p>
+
+<p>I am a recent UNSW graduate, coming away with a Bachelors of Science majoring in 
+  Mathematics and minoring in Psychology. Beyond that though I have a great interest
+  in a lot of other academic fields. Philosphy, Psychology, Literature, Photography,
+  History and Theology all bring their own little spark to my life of learning.
+</p>
+
+<p>This website has taken inspiration from a bunch of amazing places, people, ideas
+  and aesthetics. I have always had a love for the retro "16-bit" aesthetic of the 90's
+ and early 2000's. When I was younger you would always find me on a Nintendo, SEGA, XBOX 
+ or PC playing something or messing around. I'm glad to say that all those hours didn't go to waste,
+ because I believe thats what brought me here. I think of this website as a bit of a love letter
+to that younger Kaille. Bridging my two worlds together under one quaint little roof.</p>
+
+<p>There is so much more I would like to share about me and this little world I am trying
+  to create, but for now I am going to leave it at that.
+</p>
+
+<p>If your're interested in getting to know me more, or want to have a chat you can find my
+  contact information in my resume down below! Hope you enjoy looking around!
+</p>
+
+
+
+
+
+<!--
+
           <p>Hi! I'm Kaille. I like to do a lot of cool things!
               This is my website, it has all my favourite things, like my photos, my essays
               and links to all the places on the internet I take inspiration from and visit.
@@ -51,6 +86,9 @@
               I am looking forward to tinkering in here and seeing what comes of it. I can't wait
               to show you how it goes!
             </p>
+
+-->
+
 
 
             <div class="card">
@@ -89,7 +127,10 @@
       <nav id="panel" aria-label="Main">
         <span class="light" aria-hidden="true"></span>
         <button type="button" id="power" aria-label="Screen power" aria-pressed="true"></button>
-        <span class="knob" aria-hidden="true"></span>
+        <div class="controls">
+  <span class="knob" aria-hidden="true"></span>
+  <button type="button" id="fx" aria-label="Background animation" aria-pressed="true" title="Toggle background animation">∞</button>
+</div>
         <a href="index.html">HOME</a>
         <a href="about.html" aria-current="page">ABOUT</a>
         <a href="archives.html">ARCHIVES</a>
