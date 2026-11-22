@@ -1,10 +1,10 @@
 
 // each row: [alpha, beta, gamma, delta, w, n]
 const keys = [
-  [-0.8,   0.10, -1.1,   0.10, -0.4,  0],   // centre stable node
-  [ 1.5, 0.12, -0.5,   0.12, -0.6,  0],   // two stable nodes, slow clockwise spin
-  [ 2, 0.12, -0.3, 0.12, -0.8,  1],   // chaotic mixing
-  [ 1,   0.16,  1,   0.16, -2,    0],   // circle
+  [-0.8,   0.10, -1.1,   0.10, -0.4,  0, 1],   // centre stable node
+  [ 1.5, 0.12, -0.5,   0.12, -0.6,  0, 1],   // two stable nodes, slow clockwise spin
+  [ 1.5, 0.12, -0.3, 0.12, -0.8,  1, 1],   // chaotic mixing
+  [ 1,   0.16,  1,   0.16, -2,    0, 1.5],   // circle, stretched into an oval
 ];
 
 function startFlow() {
@@ -18,6 +18,11 @@ function startFlow() {
 
   let p = 0, tt = 0;   // p = position in the loop (0 to 1), tt = clock for the wobble
   let raf = 0;         // remembers the running loop so it can be stopped
+    // ---- figure-8 path + spin: their own clocks, separate from the flow loop ----
+  const EIGHT = 1.0;           // half-width of the figure 8, in maths units (screen is 10 across)
+    const EIGHT_SPEED = 0.0029;
+  const SPIN_SPEED  = 0.0013;
+  let a8 = 0, aSpin = 0;       // where each one currently is
 
   // ---- canvas size: desktop = wide canvas, phone = small tall canvas ----
   // In portrait the flow is turned sideways, so its long axis runs up the screen.
@@ -58,6 +63,8 @@ function startFlow() {
     if (s && s.p >= 0 && s.p < 1) {
       p = s.p;                                   // pick the loop up where it was left
       tt = s.tt;
+            a8 = s.a8 || 0;
+      aSpin = s.aSpin || 0;
       if (s.dots && s.dots.length === dots.length) {
         s.dots.forEach((v, n) => {               // put every dot back where it was
           dots[n].x = v[0];
@@ -72,7 +79,7 @@ function startFlow() {
   window.addEventListener("pagehide", () => {   // runs just as you leave the page
     try {
       sessionStorage.setItem("flow-state", JSON.stringify({
-        p, tt,
+        p, tt, a8, aSpin,
         dots: dots.map(d => [+d.x.toFixed(3), +d.y.toFixed(3), d.age, Math.round(d.life)]),
       }));
     } catch (e) {}
@@ -109,6 +116,12 @@ function startFlow() {
     const K0 = keys[seg], K1 = keys[(seg + 1) % N];
     const P = K0.map((v, j) => v + (K1[j] - v) * m);
     tt += 0.03;
+        // advance the two independent clocks
+    a8 += EIGHT_SPEED;
+    aSpin += SPIN_SPEED;
+    const fx = EIGHT * Math.cos(a8);                  // left-right
+    const fy = EIGHT * Math.sin(a8) * Math.cos(a8);   // up-down
+    const cs = Math.cos(aSpin), sn = Math.sin(aSpin);
 
     for (let n = 0; n < dots.length; n++) {
       const d = dots[n];
@@ -116,9 +129,13 @@ function startFlow() {
       d.x += (P[0]*x - P[1]*x*r2 - P[4]*y + P[5]*Math.sin(1.3*y + tt)) * 0.02;
       d.y += (P[2]*y - P[3]*y*r2 + P[4]*x + P[5]*Math.cos(1.1*x - 0.8*tt)) * 0.02;
       d.age++;
-      d.px = Math.floor(W/2 + (rot ? d.y : d.x) * SCALE);
-      d.py = Math.floor(H/2 - (rot ? d.x : d.y) * SCALE);
-      if (d.age > d.life || d.px < 0 || d.px >= W || d.py < 0 || d.py >= H) dots[n] = spawn();
+      const xs = d.x * P[6];              // stretch the maths x-axis by this stage's value
+      const h0 = rot ? d.y : xs;
+      const v0 = rot ? xs : d.y;
+      d.px = Math.floor(W/2 + ( h0 * cs + v0 * sn + fx) * SCALE);
+      d.py = Math.floor(H/2 - (-h0 * sn + v0 * cs + fy) * SCALE);
+            const edge = W * 0.25;   // how far past the screen edge a dot may drift before it respawns
+      if (d.age > d.life || d.px < -edge || d.px >= W + edge || d.py < -edge || d.py >= H + edge) dots[n] = spawn();
     }
 
     // draw the same dots twice: blue behind the monitor, green on the screen
