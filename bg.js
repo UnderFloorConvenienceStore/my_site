@@ -1,11 +1,14 @@
-
 // each row: [alpha, beta, gamma, delta, w, n]
 const keys = [
   [-0.8,   0.10, -1.1,   0.10, -0.4,  0, 1],   // centre stable node
-  [ 1.5, 0.12, -0.5,   0.12, -0.6,  0, 1],   // two stable nodes, slow clockwise spin
+  [ 1.5, 0.12, -0.5,   0.12, -0.6,  0.5, 1],   // two stable nodes, slow clockwise spin
   [ 1.5, 0.12, -0.3, 0.12, -0.8,  1, 1],   // chaotic mixing
   [ 1,   0.16,  1,   0.16, -2,    0, 1.5],   // circle, stretched into an oval
 ];
+
+// the "drain" stage: a very strong stable node with a spin, so every dot spirals into the centre.
+// (same layout as a row of keys above)
+const SINK = [-3.5, 0.10, -3.5, 0.10, -1.2, 0, 1];
 
 function startFlow() {
   const bg = document.getElementById("bg");
@@ -18,6 +21,18 @@ function startFlow() {
 
   let p = 0, tt = 0;   // p = position in the loop (0 to 1), tt = clock for the wobble
   let raf = 0;         // remembers the running loop so it can be stopped
+
+  // mode = what the animation is doing right now:
+  //   "run"   = normal flowing
+  //   "drain" = the flow is sliding into the sink and the dots are spiralling away
+  //   "off"   = nothing is running, canvases hidden
+  let mode = "run";
+  let drainFrames = 0;   // how long the drain has been going
+  let goneFrames = 0;    // frames counted since the last dot vanished (lets the trails fade)
+  let warm = 0;          // after a restart: frames left where new dots appear at the centre instead of anywhere
+
+  const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // ---- figure-8 path + spin: their own clocks, separate from the flow loop ----
   const EIGHT = 1.0;           // half-width of the figure 8, in maths units (screen is 10 across)
     const EIGHT_SPEED = 0.0029;
@@ -47,6 +62,9 @@ function startFlow() {
   // ---- dots ----
   const rand = (a, b) => a + Math.random() * (b - a);
   const spawn = () => {
+    if (warm > 0) {                                 // just restarted: new dots keep coming out of the centre
+      return { x: rand(-0.2, 0.2), y: rand(-0.2, 0.2), age: 0, life: rand(200, 450), px: 0, py: 0, wait: 0 };
+    }
     const hx = (rot ? H : W) / 2 / SCALE;           // half-width of the screen in maths units
     const hy = (rot ? W : H) / 2 / SCALE;
     return { x: rand(-hx, hx), y: rand(-hy, hy), age: 0, life: rand(150, 450), px: 0, py: 0 };
@@ -85,9 +103,9 @@ function startFlow() {
     } catch (e) {}
   });
 
-  function fade(c, w, h) {
+  function fade(c, w, h, amount) {
     c.globalCompositeOperation = "destination-out";
-    c.fillStyle = "rgba(0, 0, 0, 0.08)";
+    c.fillStyle = "rgba(0, 0, 0, " + amount + ")";
     c.fillRect(0, 0, w, h);
     c.globalCompositeOperation = "source-over";
   }
@@ -95,6 +113,9 @@ function startFlow() {
   function frame() {
     // work out where the screen sits on top of the background canvas
     let ox = 0, oy = 0;
+        // how strongly old trails fade this frame: gentle (0.08) normally. Once every dot has
+    // vanished during a drain it ramps up to 0.2, so the last faint ghosts really disappear
+    const fadeBy = mode === "drain" ? 0.08 + Math.min(goneFrames / 10, 1) * 0.12 : 0.08;
     if (sctx) {
       const r = scr.getBoundingClientRect();        // the screen
       const b = bg.getBoundingClientRect();         // the background canvas
@@ -104,9 +125,9 @@ function startFlow() {
       if (scr.width !== sw || scr.height !== sh) { scr.width = sw; scr.height = sh; }
       ox = Math.round((r.left - b.left) * kx);
       oy = Math.round((r.top - b.top) * ky);
-      fade(sctx, scr.width, scr.height);
+        fade(sctx, scr.width, scr.height, fadeBy);
     }
-    fade(bctx, W, H);
+    fade(bctx, W, H, fadeBy);
 
     // blend between two neighbouring stages of the loop
     const N = keys.length;
@@ -115,6 +136,15 @@ function startFlow() {
     const m = k * k * (3 - 2 * k);
     const K0 = keys[seg], K1 = keys[(seg + 1) % N];
     const P = K0.map((v, j) => v + (K1[j] - v) * m);
+
+    // draining: slide the flow's numbers from wherever they are into the sink stage.
+    // ds goes 0 -> 1 over 30 frames (half a second), so the flow tightens into a whirlpool instead of snapping
+    if (mode === "drain") {
+      const dt = Math.min(drainFrames / 30, 1);
+      const ds = dt * dt * (3 - 2 * dt);
+      for (let j = 0; j < P.length; j++) P[j] += (SINK[j] - P[j]) * ds;
+    }
+
     tt += 0.03;
         // advance the two independent clocks
     a8 += EIGHT_SPEED;
@@ -125,17 +155,36 @@ function startFlow() {
 
     for (let n = 0; n < dots.length; n++) {
       const d = dots[n];
+      if (d.gone) {                                 // already drained away: stay invisible
+        d.px = d.py = -9999;
+        continue;
+      }
+      if (d.wait > 0) {                             // not released yet: count down and stay invisible
+        d.wait--;
+        d.px = d.py = -9999;
+        continue;
+      }
       const x = d.x, y = d.y, r2 = x*x + y*y;
       d.x += (P[0]*x - P[1]*x*r2 - P[4]*y + P[5]*Math.sin(1.3*y + tt)) * 0.02;
       d.y += (P[2]*y - P[3]*y*r2 + P[4]*x + P[5]*Math.cos(1.1*x - 0.8*tt)) * 0.02;
-      d.age++;
+      // while draining, dots age 5x faster: ones near the end of their life blink out on the way in ("running dry")
+      d.age += mode === "drain" ? 5 : 1;
+
+      // draining: a dot vanishes when it reaches the centre or runs out of life, and is never replaced
+      if (mode === "drain" && (d.x*d.x + d.y*d.y < 0.04 || d.age > d.life)) {
+        d.gone = true;
+        d.px = d.py = -9999;
+        continue;
+      }
+
       const xs = d.x * P[6];              // stretch the maths x-axis by this stage's value
       const h0 = rot ? d.y : xs;
       const v0 = rot ? xs : d.y;
       d.px = Math.floor(W/2 + ( h0 * cs + v0 * sn + fx) * SCALE);
       d.py = Math.floor(H/2 - (-h0 * sn + v0 * cs + fy) * SCALE);
             const edge = W * 0.25;   // how far past the screen edge a dot may drift before it respawns
-      if (d.age > d.life || d.px < -edge || d.px >= W + edge || d.py < -edge || d.py >= H + edge) dots[n] = spawn();
+      // dots only respawn while running normally
+      if (mode === "run" && (d.age > d.life || d.px < -edge || d.px >= W + edge || d.py < -edge || d.py >= H + edge)) dots[n] = spawn();
     }
 
     // draw the same dots twice: blue behind the monitor, green on the screen
@@ -146,27 +195,84 @@ function startFlow() {
       for (const d of dots) sctx.fillRect(d.px - ox, d.py - oy, 1, 1);
     }
 
+    if (mode === "run" && warm > 0) warm--;
+
     p += 0.0003;
     if (p >= 1) p = 0;
+
+    // draining: once every dot has vanished, wait a moment for the trails to fade, then switch off
+    if (mode === "drain") {
+      drainFrames++;
+      if (dots.every(d => d.gone)) goneFrames++;
+      if (goneFrames > 30 || drainFrames > 300) { finishOff(); return; }   // 300 = safety net
+    }
+
     raf = requestAnimationFrame(frame);
   }
 
-  function setFlow(on) {
-    root.classList.toggle("noflow", !on);
+  // ---- turning the effect off: drain every dot into the centre ----
+  function startDrain() {
+    mode = "drain";
+    drainFrames = 0;
+    goneFrames = 0;
+    warm = 0;
+    for (const d of dots) {
+      if (d.wait > 0) d.gone = true;                // dots still waiting at the centre after a restart never appeared: just remove them
+      d.wait = 0;
+    }
+  }
+
+  // everything has vanished: stop and hide the canvases
+  function finishOff() {
+    mode = "off";
+    cancelAnimationFrame(raf);
+    bctx.clearRect(0, 0, W, H);                     // wipe any leftover faint trails
+    if (sctx) sctx.clearRect(0, 0, scr.width, scr.height);
+    root.classList.add("noflow");
+  }
+
+  // ---- turning it back on: every dot starts at the centre and the loop restarts ----
+  function restart() {
+    p = 0.75;                                        // start of the "chaotic mixing" stage: pushes dots out in all directions
+    warm = 270;                                     // for the next ~7 seconds, replacement dots also appear at the centre
+    for (const d of dots) {
+      d.gone = false;
+      d.x = rand(-0.2, 0.2);
+      d.y = rand(-0.2, 0.2);
+      d.age = 0;
+      d.life = rand(200, 500);                      // wide range, so dots don't all die at the same moment
+      d.wait = Math.floor(rand(0, 180));            // each dot is released at a different time (spread over ~3 seconds)
+    }
+    bctx.clearRect(0, 0, W, H);
+    if (sctx) sctx.clearRect(0, 0, scr.width, scr.height);
+  }
+
+  // on = true to turn on, false to turn off. animate = play the drain / burst (false on page load)
+  function setFlow(on, animate) {
     if (btn) btn.setAttribute("aria-pressed", String(on));
     try { localStorage.setItem("flow-off", on ? "0" : "1"); } catch (e) {}
     cancelAnimationFrame(raf);                      // stop any running loop first
-    if (on) frame();                                // start again only if turning on
+    if (on) {
+      root.classList.remove("noflow");
+      if (animate) restart();
+      mode = "run";
+      frame();
+    } else if (animate && mode === "run") {
+      startDrain();
+      frame();
+    } else {
+      finishOff();
+    }
   }
 
   let saved = null;
   try { saved = localStorage.getItem("flow-off"); } catch (e) {}
   // people who ask their device for less motion start with the animation off
   if (saved === null && window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) saved = "1";
-  setFlow(saved !== "1");
+  setFlow(saved !== "1", false);
 
   if (btn) btn.addEventListener("click", () => {
-    setFlow(root.classList.contains("noflow"));     // flip it
+    setFlow(mode !== "run", !reduceMotion);         // flip it (if it is running, turn off; otherwise turn on)
     btn.classList.add("pressed");                   // press down...
     setTimeout(() => btn.classList.remove("pressed"), 150);   // ...and back up
   });
