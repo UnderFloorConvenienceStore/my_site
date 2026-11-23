@@ -34,7 +34,7 @@ function startFlow() {
   const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // ---- figure-8 path + spin: their own clocks, separate from the flow loop ----
-  const EIGHT = 1.0;           // half-width of the figure 8, in maths units (screen is 10 across)
+  const EIGHT = 1.5;           // half-width of the figure 8, in maths units (screen is 10 across)
     const EIGHT_SPEED = 0.0029;
   const SPIN_SPEED  = 0.0013;
   let a8 = 0, aSpin = 0;       // where each one currently is

@@ -1117,6 +1117,16 @@ html.shutting .light {
   box-shadow: none;
 }
 
+/* ---------- 5. DARK MODE: phosphor glow ---------- */
+.dark #page {
+  text-shadow: 0 0 5px rgba(157, 184, 255, 0.25);
+}
+
+.dark #page h1,
+.dark #page h2 {
+  text-shadow: 0 0 8px rgba(157, 184, 255, 0.45);
+}
+
 /* power LED breathes slowly in dark mode (not while off) */
 @keyframes led-pulse {
   0%, 100% { box-shadow: 0 0 6px #97efa0, inset 0 1px 1px rgba(255, 255, 255, 0.7); }
