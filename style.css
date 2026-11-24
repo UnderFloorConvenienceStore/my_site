@@ -1024,7 +1024,7 @@ html.dark .binder .sheet { background: #2b2b2b; color: #eee; }
 }
 
 #fx[aria-pressed="false"] {
-  color: #000;                       /* black = animation off */
+  color: #4a463c;                    /* soft dark = animation off */
 }
 
 #fx:focus-visible {
@@ -1307,4 +1307,142 @@ html:not(.dark):not(.off):not(.shutting) .light {
   html:not(.dark):not(.off):not(.shutting) .light {
     animation: none;
   }
+}
+
+/* ---------- 8. PANEL TUCKS INTO THE SCREEN WHEN POWERED OFF ---------- */
+
+html { --tuck: -170px 0; }          /* desktop: slide left, into the screen */
+
+#bezel { z-index: 1; }              /* screen sits on top, so the keys slide behind it */
+
+/* normal state: keys slide back out (short wait so the boot flash plays first) */
+#panel a,
+.controls,
+#panel::after {
+  transition: translate 0.45s ease 0.15s, visibility 0s 0s;
+}
+
+/* off (and the moment the shutdown animation starts): keys tuck away */
+html.off #panel a,
+html.off .controls,
+html.off #panel::after,
+html.shutting #panel a,
+html.shutting .controls,
+html.shutting #panel::after {
+  translate: var(--tuck);
+  visibility: hidden;               /* can't be clicked or tabbed to once hidden */
+  transition: translate 0.45s ease, visibility 0s 0.45s;
+}
+
+@media (max-width: 700px) {
+  html { --tuck: 0 -140px; }        /* phone: keys sit below the screen, so slide up */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #panel a,
+  .controls,
+  #panel::after { transition: none !important; }
+}
+
+/* ---------- 9. BEZEL FILLS THE CASING; POWER BUTTON POKES OUT OF THE SIDE (desktop only) ---------- */
+@media (min-width: 701px) {
+
+  html { --out: 14px; }                 /* how far the button sticks out past the casing */
+
+  /* keys keep their full size while the panel collapses, so they don't squash */
+  #panel a,
+  #panel::after,
+  .controls {
+    width: 112px;
+    box-sizing: border-box;
+  }
+
+  #panel {
+    transition: width 0.45s ease 0.15s, margin-left 0.45s ease 0.15s;
+  }
+
+  #power {
+    transition: translate 0.45s ease 0.15s;
+  }
+
+  /* off: the panel collapses to nothing and the bezel fills the casing */
+  html.off #panel,
+  html.shutting #panel {
+    width: 0;
+    margin-left: -18px;                 /* cancels the 18px gap, so the rim is an even 26px */
+    transition: width 0.45s ease, margin-left 0.45s ease;
+  }
+
+  /* the power button slides out to the casing's edge */
+  html.off #power,
+  html.shutting #power {
+    translate: calc(10px + var(--out)) 0;
+    transition: translate 0.45s ease;
+  }
+}
+
+/* ---------- 10. POWER BUTTON BECOMES A SIDE BUTTON WHEN OFF (desktop only) ---------- */
+@media (min-width: 701px) {
+
+  html { --side-w: 18px; }            /* how wide the side button is */
+
+  /* normal state: how it changes back when the screen turns on */
+  #power {
+    transition:
+      translate 0.45s ease 0.15s,
+      width 0.45s ease 0.15s,
+      border-radius 0.45s ease 0.15s,
+      box-shadow 0.12s ease;
+  }
+
+  #power::before { transition: opacity 0.25s ease 0.15s; }
+  #power::after  { transition: top 0.45s ease 0.15s, height 0.45s ease 0.15s; }
+
+  /* off: the button narrows into a tab on the casing's side */
+  html.off #power,
+  html.shutting #power {
+    width: var(--side-w);
+    border-radius: 3px 8px 8px 3px;       /* tucked side stays squarer, outer end rounded */
+    translate: calc(27px - var(--side-w) / 2 + var(--out)) 0;
+    box-shadow: 3px 0 0 #8d8776, 5px 2px 5px rgba(0, 0, 0, 0.3);   /* its thickness is on the right now */
+    transition:
+      translate 0.45s ease,
+      width 0.45s ease,
+      border-radius 0.45s ease,
+      box-shadow 0.12s ease;
+  }
+
+  /* the power symbol's ring fades out and its stem stretches into a grip line */
+  html.off #power::before,
+  html.shutting #power::before {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  html.off #power::after,
+  html.shutting #power::after {
+    top: 10px;
+    height: 14px;
+    transition: top 0.45s ease, height 0.45s ease;
+  }
+
+  /* pressed: pushes in toward the screen (left) instead of down */
+  html.off #power:active {
+    transform: translateX(-2px);
+    box-shadow: 1px 0 0 #8d8776, inset 2px 0 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.inf-icon {
+  width: 17px;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
+  margin: 0 auto;
+  overflow: visible;
+  transition: stroke 0.15s;
 }
